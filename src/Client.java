@@ -1,3 +1,11 @@
 public class Client {
-    private bitch;
+    private String viktor;
+
+
+    public void setViktor(String viktor){
+
+        this.viktor = viktor;
+
+    }
+
 }
