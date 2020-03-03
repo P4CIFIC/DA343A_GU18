@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.util.Calendar;
 import java.util.Date;
 
 public class Message {
@@ -7,21 +8,49 @@ public class Message {
     private ImageIcon messageImage;
     private User sender;
     private User recipient;
-    private Date timeSent;
-    private Date timeDelivered;
+    private Calendar timeSent;
+    private Calendar timeDelivered;
 
-    public Message(String messageText, User sender, User recipient, Date timeSent) {
+    public Message(String messageText, User sender, User recipient) {
         this.messageText = messageText;
         this.sender = sender;
         this.recipient = recipient;
-        this.timeSent = timeSent;
+        this.timeSent = Calendar.getInstance();
     }
 
-    public Message(String messageText, ImageIcon messageImage, User sender, User recipient, Date timeSent) {
+    public Message(String messageText, ImageIcon messageImage, User sender, User recipient) {
         this.messageText = messageText;
         this.messageImage = messageImage;
         this.sender = sender;
         this.recipient = recipient;
-        this.timeSent = timeSent;
+        this.timeSent = Calendar.getInstance();
+    }
+
+    public void setTimeDelivered(Calendar timeDelivered) {
+        this.timeDelivered = timeDelivered;
+    }
+
+    public String getMessageText() {
+        return messageText;
+    }
+
+    public ImageIcon getMessageImage() {
+        return messageImage;
+    }
+
+    public User getSender() {
+        return sender;
+    }
+
+    public User getRecipient() {
+        return recipient;
+    }
+
+    public Calendar getTimeSent() {
+        return timeSent;
+    }
+
+    public Calendar getTimeDelivered() {
+        return timeDelivered;
     }
 }
