@@ -1,4 +1,4 @@
 public class Client {
-    private String thomas;
-    private String getThomas;
+    private bitch;
+    private motherfucker;
 }
