@@ -1,3 +1,3 @@
 public class Client {
-    private bitch;
+    private String thomas;
 }
