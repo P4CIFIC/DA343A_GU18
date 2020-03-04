@@ -15,7 +15,7 @@ public class ServerController {
 
     public ServerController(int port) {
 
-        new Connection(port).start();//hej
+        new Connection(port).start();//hejsan
 
     }
 
