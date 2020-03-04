@@ -7,15 +7,11 @@ import java.util.ArrayList;
 
 public class ServerController {
 
-    private int port;
-    private ObjectInputStream ois;
-    private ObjectOutputStream oos;
-    private ServerSocket serverSocket;
     private ArrayList<ClientHandler> listClientHandler = new ArrayList<>();
 
     public ServerController(int port) {
 
-        new Connection(port).start();//nej
+        new Connection(port).start();
 
     }
 
