@@ -1,14 +1,14 @@
 package server;
 
-import client.Client;
+
 import client.Message;
 import client.User;
-import com.sun.security.ntlm.Server;
+
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
+
 
 public class ServerController {
 
@@ -81,6 +81,8 @@ public class ServerController {
 
         @Override
         public void run() {
+
+
             while (true) {
 
                 try {
