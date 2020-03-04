@@ -31,27 +31,23 @@ public class ServerController {
         public void run() {
             Socket socket;
             try (ServerSocket serverSocket = new ServerSocket(port)) {
-
+                socket = serverSocket.accept();
                 while (true) {
-                    try {
-                        ClientHandler clientHandler;
-                        User user = message.getSender();
+                    ClientHandler clientHandler;
+                    User user = message.getSender();
+                    // if client contains ClientHandler then start Thread again
+                    if (clients.containsUser(user)) {
+                        clientHandler = (ClientHandler) clients.get(user);
+                        clientHandler.setSocket(socket);
+                        clientHandler.start();
 
-                        if (clients.containsUser(user)) {
-                            clientHandler = (ClientHandler) clients.get(user);
-                            clientHandler.start();
-
-                        } else {
-
-                            socket = serverSocket.accept();
-                            clientHandler = new ClientHandler(socket);
-                            clients.put(user, clientHandler);
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        // if clients does not contains ClientHandler then create one for them
+                    } else if (!clients.containsUser(user)){
+                        clientHandler = new ClientHandler(socket);
+                        clients.put(user, clientHandler);
                     }
                 }
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,6 +73,10 @@ public class ServerController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+
+        public void setSocket(Socket socket) {
+            this.socket = socket;
         }
 
         @Override
