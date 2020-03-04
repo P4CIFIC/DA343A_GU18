@@ -31,8 +31,8 @@ public class ServerController {
         public void run() {
             Socket socket;
             try (ServerSocket serverSocket = new ServerSocket(port)) {
-                socket = serverSocket.accept();
                 while (true) {
+                    socket = serverSocket.accept();
                     ClientHandler clientHandler;
                     User user = message.getSender();
                     // if client contains ClientHandler then start Thread again
@@ -47,7 +47,6 @@ public class ServerController {
                         clients.put(user, clientHandler);
                     }
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,7 +59,7 @@ public class ServerController {
         private ObjectInputStream ois;
         private ObjectOutputStream dos;
         private Clients clients;
-
+        private ArrayList<Message> messages = new ArrayList<>();
 
         public ClientHandler(Socket socket) {
             clients = new Clients();
@@ -70,6 +69,7 @@ public class ServerController {
                 ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
                 dos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
                 start();
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -82,15 +82,16 @@ public class ServerController {
         @Override
         public void run() {
             while (true) {
+                try {
+                    message = (Message) ois.readObject();
+                    if (socket == null) {
+                        messages.add(message);
+                    }
 
-             /*   try {
 
-                    Object obj = ois.readObject();
                     if () {
                         //if satsen ska först kolla om personen finns i onlineList och ifall inte skicka det och lagra i klassen unsentMessages
                         //Finns personen så skicka det till hen
-
-
                     } else {
                         // här finns kod som ska lagra i unsentMessages
                     }
@@ -99,7 +100,7 @@ public class ServerController {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }*/
+                }
             }
         }
     }
