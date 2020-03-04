@@ -1,4 +1,4 @@
-package Client;
+package client;
 
 import javax.swing.*;
 import java.util.Calendar;

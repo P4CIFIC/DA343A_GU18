@@ -1,3 +1,5 @@
+package server;
+
 import com.sun.security.ntlm.Server;
 
 import java.io.*;
@@ -10,7 +12,6 @@ public class ServerController {
     private ArrayList<ClientHandler> listClientHandler = new ArrayList<>();
 
     public ServerController(int port) {
-
         new Connection(port).start();
 
     }
@@ -32,14 +33,14 @@ public class ServerController {
                     try {
                         socket = serverSocket.accept();
                         listClientHandler.add(new ClientHandler(socket));
-                        System.out.println();
+
                     } catch (IOException e) {
+                        e.printStackTrace();
                     }
                 }
             } catch (IOException e) {
-
+                e.printStackTrace();
             }
-
         }
     }
 
@@ -50,12 +51,17 @@ public class ServerController {
         private ObjectOutputStream dos;
 
 
-        public ClientHandler(Socket socket) throws IOException {
+        public ClientHandler(Socket socket) {
 
             this.socket = socket;
-            ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-            dos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
-            start();
+
+            try {
+                ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
+                dos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         @Override
@@ -70,12 +76,12 @@ public class ServerController {
                     }
 
                     Object obj = ois.readObject();
-                    if (){
+                    if () {
                         //if satsen ska först kolla om personen finns i onlineList och ifall inte skicka det och lagra i klassen unsentMessages
                         //Finns personen så skicka det till hen
 
 
-                    }else{
+                    } else {
                         // här finns kod som ska lagra i unsentMessages
                     }
 
@@ -86,8 +92,6 @@ public class ServerController {
                 }
 
             }
-
-
         }
     }
 }
