@@ -3,7 +3,9 @@ package client;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public class
+
+Client {
     private ClientController controller;
     private Socket socket;
     ObjectOutputStream oos;

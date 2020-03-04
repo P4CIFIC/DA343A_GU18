@@ -1,5 +1,7 @@
 package GuiClient;
 
+import client.ClientController;
+
 import javax.swing.*;
 import java.awt.*;
 

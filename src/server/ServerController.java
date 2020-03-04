@@ -83,7 +83,7 @@ public class ServerController {
         public void run() {
             while (true) {
 
-                try {
+             /*   try {
 
                     Object obj = ois.readObject();
                     if () {
@@ -99,7 +99,7 @@ public class ServerController {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         }
     }
