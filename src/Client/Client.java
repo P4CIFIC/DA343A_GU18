@@ -14,7 +14,30 @@ public class Client {
 
         ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+        new Reciever().start();
 
+    }
+    public void setClientController(ClientController controller) {
+        this.controller = controller;
+    }
+
+
+
+    public void send(Message message){
+        try {
+            oos.writeObject(message);
+            oos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void disconnect(){
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
