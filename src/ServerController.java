@@ -15,7 +15,7 @@ public class ServerController {
 
     public ServerController(int port) {
 
-        new Connection(port).start();
+        new Connection(port).start();//hej
 
     }
 
