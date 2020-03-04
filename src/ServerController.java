@@ -47,7 +47,7 @@ public class ServerController {
         }
     }
 
-    private class ClientHandler extends Thread{
+    private class ClientHandler extends Thread {
 
         private Socket socket;
         private ObjectInputStream ois;
@@ -64,13 +64,24 @@ public class ServerController {
 
         @Override
         public void run() {
-            while (true){
+            while (true) {
 
                 try {
+
+                    if () {
+
+                        //är personen en ny användare? dvs kolla user och lagra namn samt bild där om personen inte finns sedan tidigare
+                    }
+
                     Object obj = ois.readObject();
-                    if(//personen finns i lista dvs inloggad
-                    //om inte så kolla kontaktlistan sen skicka
-                    // ) {
+                    if (){
+                        //if satsen ska först kolla om personen finns i onlineList och ifall inte skicka det och lagra i klassen unsentMessages
+                        //Finns personen så skicka det till hen
+
+
+                    }else{
+                        // här finns kod som ska lagra i unsentMessages
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -78,17 +89,12 @@ public class ServerController {
                     e.printStackTrace();
                 }
 
-
-            } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-
             }
+
+
         }
     }
-
-
 }
+
+
+
