@@ -41,7 +41,7 @@ public class ServerController {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
                 while (true) {
                     socket = serverSocket.accept();
-                    new ClientHandler(socket);
+                    new ClientHandler(socket).start();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
