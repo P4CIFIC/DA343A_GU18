@@ -1,18 +1,15 @@
 package server;
 
-
 import client.Message;
-import client.User;
-
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-
 public class ServerController {
 
-    private Clients clients = new Clients();
+    private AllClients allClients;
+    private OnlineClients onlineClients;
     private Message message;
 
     public ServerController(int port) {
@@ -25,6 +22,7 @@ public class ServerController {
 
         public Connection(int port) {
             this.port = port;
+            allClients = new AllClients();
         }
 
         @Override
@@ -33,19 +31,7 @@ public class ServerController {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
                 while (true) {
                     socket = serverSocket.accept();
-                    ClientHandler clientHandler;
-                    User user = message.getSender();
-                    // if client contains ClientHandler then start Thread again
-                    if (clients.containsUser(user)) {
-                        clientHandler = (ClientHandler) clients.get(user);
-                        clientHandler.setSocket(socket);
-                        clientHandler.start();
-
-                        // if clients does not contains ClientHandler then create one for them
-                    } else if (!clients.containsUser(user)){
-                        clientHandler = new ClientHandler(socket);
-                        clients.put(user, clientHandler);
-                    }
+                    new ClientHandler(socket);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -58,11 +44,9 @@ public class ServerController {
         private Socket socket;
         private ObjectInputStream ois;
         private ObjectOutputStream dos;
-        private Clients clients;
-        private ArrayList<Message> messages = new ArrayList<>();
 
         public ClientHandler(Socket socket) {
-            clients = new Clients();
+
             this.socket = socket;
 
             try {
@@ -75,14 +59,8 @@ public class ServerController {
             }
         }
 
-        public void setSocket(Socket socket) {
-            this.socket = socket;
-        }
-
         @Override
         public void run() {
-
-
             while (true) {
                 try {
                     message = (Message) ois.readObject();

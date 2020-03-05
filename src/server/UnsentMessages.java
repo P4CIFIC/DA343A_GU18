@@ -15,8 +15,6 @@ public class UnsentMessages {
     }
 
     public synchronized ArrayList<Message> get(User user){
-
         return unsent.get(user);
-
     }
 }
