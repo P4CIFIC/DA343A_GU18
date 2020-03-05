@@ -17,7 +17,6 @@ Client {
         ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
         oos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
         new Reciever().start();
-
     }
     public void setClientController(ClientController controller) {
         this.controller = controller;
@@ -41,11 +40,6 @@ Client {
             e.printStackTrace();
         }
     }
-
-
-
-
-
 
     private class Reciever extends Thread{
         @Override

@@ -13,10 +13,10 @@ public class ClientController {
 
     }
 
-
     public void send(Message message){
         client.send(message);
     }
+
     public void disconnect(){
         client.disconnect();
     }
