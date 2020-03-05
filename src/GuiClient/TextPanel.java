@@ -11,6 +11,7 @@ public class TextPanel extends JPanel {
     private JPanel pnlNorth = new JPanel(new BorderLayout());
     private JPanel pnlSouth = new JPanel(new FlowLayout());
     private JTextArea JTAmessages = new JTextArea();
+    private JLabel labelMessage = new JLabel("hejsnabajsam");
     private JTextArea JTWriteMessage = new JTextArea();
     private JScrollPane scrollpanemessages = new JScrollPane(JTAmessages);
     private JScrollPane scrollPaneJTAsouth = new JScrollPane(JTWriteMessage);
@@ -18,6 +19,9 @@ public class TextPanel extends JPanel {
     private JButton JBSend = new JButton("Send");
     private JButton JBaddPic = new JButton("Add picture");
     private MainPanel mainPanel;
+    private ImageIcon picture = new ImageIcon("images/Hippo.jpg");
+    private JLabel JLPicture = new JLabel(picture);
+
     public TextPanel(MainPanel panel){
        setPreferredSize(new Dimension(400,400));
        setLayout(new BorderLayout());
@@ -33,7 +37,11 @@ public class TextPanel extends JPanel {
        JBSend.addActionListener(new listener());
        pnlSouthEast.add(JBSend);
        pnlSouthEast.add(JBaddPic);
-       pnlNorth.add(scrollpanemessages);
+       pnlSouthEast.setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+       JTWriteMessage.setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+       pnlNorth.add(JLPicture, BorderLayout.NORTH);
+       //pnlNorth.add(scrollpanemessages, BorderLayout.CENTER);
+        pnlNorth.add(labelMessage, BorderLayout.SOUTH);
        pnlSouth.add(scrollPaneJTAsouth);
        pnlSouth.add(pnlSouthEast);
 

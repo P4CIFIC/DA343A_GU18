@@ -22,6 +22,7 @@ public class ClientController {
     }
 
     /*
+
     Anropas av gui:t när användaren klickar på ett meddelande i listan.
     Skickar valt index som parameter.
 
