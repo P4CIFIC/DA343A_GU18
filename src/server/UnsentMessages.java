@@ -18,4 +18,11 @@ public class UnsentMessages {
     public synchronized LinkedList<Message> get(User user){
         return unsent.get(user);
     }
+    public synchronized Boolean containsUser(User user) {
+        if (unsent.containsKey(user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

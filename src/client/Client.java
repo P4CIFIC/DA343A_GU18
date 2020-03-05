@@ -12,6 +12,7 @@ Client {
     ObjectInputStream ois;
 
     public Client(String ip, int port) throws IOException {
+
         socket = new Socket(ip,port);
 
         ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
