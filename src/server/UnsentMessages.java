@@ -5,16 +5,17 @@ import client.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class UnsentMessages {
 
-    private HashMap<User, ArrayList<Message>> unsent = new HashMap<>();
+    private HashMap<User, LinkedList<Message>> unsent = new HashMap<>();
 
-    public synchronized void put(User user, ArrayList<Message> messages){
+    public synchronized void put(User user, LinkedList<Message> messages){
         unsent.put(user, messages);
     }
 
-    public synchronized ArrayList<Message> get(User user){
+    public synchronized LinkedList<Message> get(User user){
         return unsent.get(user);
     }
 }

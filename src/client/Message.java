@@ -1,9 +1,10 @@
 package client;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.Calendar;
 
-public class Message {
+public class Message implements Serializable {
 
     private String messageText;
     private ImageIcon messageImage;

@@ -23,4 +23,9 @@ public class OnlineClients {
         } else {
             return false;
         }
-    }}
+    }
+
+    public synchronized void removeUser(User user) {
+        clients.remove(user);
+    }
+}
