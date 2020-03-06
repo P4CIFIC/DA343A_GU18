@@ -1,8 +1,6 @@
 package GuiClient;
 
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.plaf.BorderUIResource;
 import java.awt.*;
 
 public class ContactListPanel extends JPanel {
@@ -17,7 +15,9 @@ public class ContactListPanel extends JPanel {
     private JLabel jLabelempty = new JLabel();
     private JPanel jPanelcontactList = new JPanel(new BorderLayout());
     private JPanel jPanelOnlineList = new JPanel(new BorderLayout());
-    public ContactListPanel(){
+    private ClientGui mainPanel;
+    public ContactListPanel(ClientGui mainPanel){
+        this.mainPanel = mainPanel;
         setPreferredSize(new Dimension(150,600));
         contactListLabel.setPreferredSize(new Dimension(150,20));
         contactListArray = new String[]{""};
@@ -58,7 +58,7 @@ public class ContactListPanel extends JPanel {
         for (int i = 0; i<bajs.length; i++){
             bajs[i] = String.valueOf(i);
         }
-        JOptionPane.showMessageDialog(null,new ContactListPanel());
+
     }
 
 }

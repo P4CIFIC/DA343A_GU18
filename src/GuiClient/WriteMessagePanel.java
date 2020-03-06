@@ -6,6 +6,7 @@ import java.awt.*;
 import java.io.File;
 
 public class WriteMessagePanel extends JPanel {
+    private JFrame frame;
     private  ImageIcon icon;
    private JPanel panel = new JPanel(new BorderLayout());
    private JTextArea jTextArea = new JTextArea();
@@ -13,12 +14,13 @@ public class WriteMessagePanel extends JPanel {
     private JButton buttonSend = new JButton("Send");
     private JButton buttonExit = new JButton("Close");
     private JButton buttonAddPicture = new JButton("Add picture");
-    private JPanel panelButtons = new JPanel(new GridLayout());
+    private JPanel panelButtons = new JPanel(new GridLayout(1,3,7,7));
     private JFileChooser fileChooser;
     private MessageShowPanel messageShowPanel;
     public WriteMessagePanel (String name, MessageShowPanel messageShowPanel){
         setPreferredSize(new Dimension(600,400));
         setLayout(new BorderLayout());
+        setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
         this.messageShowPanel = messageShowPanel;
         panel.setBorder(new TitledBorder("Writing a message to " +name));
         panel.add(jScrollPane);
@@ -27,6 +29,8 @@ public class WriteMessagePanel extends JPanel {
 
         buttonSend.addActionListener(e -> sendMessage());
         buttonAddPicture.addActionListener(e -> addPicture());
+        buttonExit.addActionListener(e -> frame.dispose());
+
         panelButtons.add(buttonSend);
         panelButtons.add(buttonAddPicture);
         panelButtons.add(buttonExit);
@@ -61,8 +65,9 @@ public class WriteMessagePanel extends JPanel {
     }
 
 
+
     public void showPanelinFrame(){
-        JFrame frame = new JFrame("Write your message");
+        frame = new JFrame("Write your message");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.add(this);
         frame.pack();

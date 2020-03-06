@@ -1,25 +1,27 @@
 package GuiClient;
 
 import client.ClientController;
-import client.Message;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
-public class MainPanel extends JPanel {
+public class ClientGui extends JPanel {
     private ClientController clientController;
    private  ContactListPanel contactListPanel;
    private MessageListPanel messageListPanel;
    private MessageShowPanel messageShowPanel = new MessageShowPanel(this);
-   public MainPanel(ClientController controller){
-      // this.clientController = controller;
+   public ClientGui(ClientController controller){
+       this.clientController = controller;
+
        setLayout(new BorderLayout());
-       contactListPanel = new ContactListPanel();
-       messageListPanel = new MessageListPanel();
+       contactListPanel = new ContactListPanel(this);
+       messageListPanel = new MessageListPanel(this);
        setPreferredSize(new Dimension(1000,600));
        messageListPanel.setBorder(BorderFactory.createBevelBorder(1,Color.DARK_GRAY,Color.LIGHT_GRAY));
        setBorder(BorderFactory.createEmptyBorder(7,7,7,7));
+
+
        add(messageListPanel, BorderLayout.EAST);
        add(messageShowPanel, BorderLayout.CENTER);
        add(contactListPanel,BorderLayout.WEST);
@@ -73,7 +75,7 @@ public class MainPanel extends JPanel {
         for(int i = 0; i<messages.length;i++){
             messages[i] = String.valueOf(i);
         }
-        MainPanel panel = new MainPanel(new ClientController());
+        ClientGui panel = new ClientGui(new ClientController());
         panel.refreshAll(arr,arr,arr);
 
 

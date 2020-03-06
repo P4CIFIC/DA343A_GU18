@@ -1,14 +1,11 @@
 package GuiClient;
 
-import client.Message;
-import jdk.nashorn.internal.scripts.JO;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class MessageShowPanel extends JPanel {
     private JLabel jLabelSenderinfo = new JLabel("Daniel - Klockan 13:37");
-    private ImageIcon iconPicture = new ImageIcon("images/Hippo.jpg");
+    private ImageIcon iconPicture = new ImageIcon("images/nopic.png");
     private JLabel jLabelPicture = new JLabel(iconPicture);
     private JPanel panelNorth = new JPanel(new BorderLayout());
     private JPanel panelCenter = new JPanel(new BorderLayout());
@@ -21,10 +18,10 @@ public class MessageShowPanel extends JPanel {
     private JButton buttonNewMessage = new JButton("New message");
     private JTextArea jTextAreaMessage = new JTextArea();
     private JScrollPane jScrollPane = new JScrollPane(jTextAreaMessage);
-    private MainPanel panel;
+    private ClientGui panel;
 
 
-    public MessageShowPanel(MainPanel panel){
+    public MessageShowPanel(ClientGui panel){
         this.panel=panel;
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380,600));
