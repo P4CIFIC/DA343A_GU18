@@ -1,33 +1,98 @@
 package client;
 
+import javax.swing.*;
+import java.util.LinkedList;
+
 public class ClientController {
     private Client client;
+    private User user;
+    private MessageRegister register = new MessageRegister();
+    private GUI gui;
 
 
-    public ClientController(Client client){
-        this.client = client;
-        client.setClientController(this);
+
+  //  public ClientController(){
+     //   client = new Client("10.2.12.10",new User("Thomas",new ImageIcon("images/gubbe.jpg")));
+
+    //}
+
+    public ClientController(){
+        new loginGUI(this);
     }
-//Konstruktor utan parameter behövs för GUI:t
-    public ClientController() {
 
+    public User setOnlineList(LinkedList<User> onlineList){
+
+        String[] onlineArray = new String[onlineList.size()];
+
+        for ( int i = 0; i < onlineList.size() ; i++){
+            onlineArray[i] = onlineList.get(i).getName();
+        }
+        return onlineList.get(0);
+    }
+
+    public void storeMessage(Message message){
+
+
+        register.storeMessage(message);
+        gui.updateMessages(register.getMessageList());
     }
 
     public void send(Message message){
         client.send(message);
     }
 
-    public void disconnect(){
-        client.disconnect();
+    public void disconnect(){ client.disconnect();
     }
 
-    /*
-    Anropas av gui:t när användaren klickar på ett meddelande i listan.
-    Skickar valt index som parameter.
+    public void updateMessageView(String[] messageList ){
+        //todo
+      //  view.setMessageList(messageList);
+    }
 
-    Ska se till att gui:t uppdateras med en bild som visas
-    public void messageChosen(int index){
+    public void messageReceived(Message message){
+
+        register.storeMessage(message);
+        updateMessageView(register.getMessageList());
+
+    }
+
+    public void login(String name, String ip){
+
+        client = new Client(ip,this);
+        client.connect();
+        client.logIn(new MessageLogIn(name));
+        startGui();
+        client.startReceiver();
 
 
-     */
-}
+
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void register(String name, String ip, ImageIcon icon){
+
+        user = new User(name,icon);
+
+        client = new Client(ip,user ,this);
+        client.connect();
+        client.authenticate(user);
+        startGui();
+        client.startReceiver();
+
+    }
+
+    public void startGui(){
+        gui = new GUI();
+    }
+
+    public static void main(String[] args) {
+        ClientController controller = new ClientController();
+    }
+
+
+
+    }
+
