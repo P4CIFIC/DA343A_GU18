@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 
 public class Message implements Serializable {
-
+    private static final long serialVersionUID = 42L;
     private String messageText;
     private ImageIcon messageImage;
     private User sender;
@@ -13,9 +13,6 @@ public class Message implements Serializable {
     private Calendar timeSent;
     private Calendar timeDelivered;
     private Boolean containsImage;
-   // private static final long serialVersionUID = 42L;
-
-
 
     public Message(String messageText, User sender, User recipient) {
         this.messageText = messageText;
@@ -23,9 +20,6 @@ public class Message implements Serializable {
         this.recipient = recipient;
         this.timeSent = Calendar.getInstance();
         containsImage = false;
-    }
-    public Message(String messageText){
-        this.messageText = messageText;
     }
 
     public Message(String messageText, ImageIcon messageImage, User sender, User recipient) {
@@ -35,6 +29,10 @@ public class Message implements Serializable {
         this.recipient = recipient;
         this.timeSent = Calendar.getInstance();
         containsImage = true;
+    }
+
+    public Message(String messageText) {
+        this.messageText = messageText;
     }
 
     public void setTimeDelivered(Calendar timeDelivered) {

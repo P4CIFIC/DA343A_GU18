@@ -1,5 +1,6 @@
 package server;
 
+import client.Client;
 import client.Message;
 import client.User;
 
@@ -13,7 +14,6 @@ public class ServerController {
 
     private AllClients allClients;
     private OnlineClients onlineClients;
-    private Message message;
     private UnsentMessages unsentMessages;
 
     public ServerController(int port) {
@@ -32,7 +32,6 @@ public class ServerController {
 
         public Connection(int port) {
             this.port = port;
-
         }
 
         @Override
@@ -41,7 +40,10 @@ public class ServerController {
             try (ServerSocket serverSocket = new ServerSocket(port)) {
                 while (true) {
                     socket = serverSocket.accept();
-                    new ClientHandler(socket).start();
+                    System.out.println("Ansluten");
+                    ClientHandler clientHandler = new ClientHandler(socket);
+                    clientHandler.start();
+                    //clientHandler.sendOnlineList();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -54,69 +56,137 @@ public class ServerController {
         private Socket socket;
         private ObjectInputStream ois;
         private ObjectOutputStream dos;
-        private LinkedList<Message> messages = new LinkedList<>();
+        private LinkedList<Message> pendingMessages = new LinkedList<>();
         private User user;
+        private Message message;
+        private Object readObject;
 
         public ClientHandler(Socket socket) {
             this.socket = socket;
+            System.out.println("ClientHandler running");
 
             try {
-                ois = new ObjectInputStream(new BufferedInputStream(socket.getInputStream()));
-                dos = new ObjectOutputStream(new BufferedOutputStream(socket.getOutputStream()));
+                ois = new ObjectInputStream(socket.getInputStream());
+                dos = new ObjectOutputStream(socket.getOutputStream());
+/*
+                User user = (User) ois.readObject();
+                System.out.println(user.getName());
+                dos.writeObject(new Message("bajs"));
 
-                Object object = ois.readObject();
+ */
 
-                if (object instanceof User) {
-                    user = (User) object;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println("Clienhandler is done");
+        }
+
+        public void sendMessage(Message message) {
+
+            try {
+                User recipient = message.getRecipient();
+
+                if (onlineClients.containsUser(recipient)) {
+
+                    ClientHandler recipientClient = (ClientHandler) onlineClients.get(recipient);
+                    recipientClient.sendMessage(message); //hmmmmm kommer detta verkligen att fungera?...
+                    dos.writeObject(message);
+                    dos.flush();
+
                 }
-                if (!onlineClients.containsUser(user)) {
-                    onlineClients.put(user, ClientHandler.this);
-                }
-                if (!allClients.containsUser(user)) {
-                    allClients.put(user);
+                //if person isn't online, store messages in unsent messages.
+                else if (!onlineClients.containsUser(message.getRecipient()) && (allClients.containsUser(user))) {
+
+                    pendingMessages.add(message);
+                    unsentMessages.put(message.getRecipient(), pendingMessages);
+
                 }
 
-            } catch (IOException | ClassNotFoundException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
 
-        public void send(Object object) {
-
+        public void sendOnlineList() {
             try {
-                dos.writeObject(object);
+
+                onlineClients.getOnlineLinkedList();
+                dos.writeObject(onlineClients.getOnlineLinkedList());
                 dos.flush();
+
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+
+        public void sendUnsentMessages(User user) {
+            LinkedList<Message> list = unsentMessages.get(user);
+            Message message;
+            if (unsentMessages.containsUser(user)) {
+                for (int i = 0; i < list.size(); i++) {
+                    message = list.get(i);
+                    try {
+                        dos.writeObject(message);
+                        dos.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
 
         @Override
         public void run() {
 
+            try {
+                readObject = ois.readObject();
+                System.out.println(readObject.toString());
+            } catch (IOException | ClassNotFoundException e) {
+                //e.printStackTrace();
+            }
+
+            if (readObject instanceof User) {
+                user = (User) readObject;
+            }
+
+            if (!onlineClients.containsUser(user)) {
+
+                onlineClients.put(user, ClientHandler.this);
+                System.out.println(onlineClients.size());
+
+            }
+
+
+            if (!allClients.containsUser(user)) {
+                allClients.put(user);
+            }
+            sendOnlineList();
+            sendUnsentMessages(user);
+
+
             while (true) {
-                try {
 
-                    if (!onlineClients.containsUser(message.getRecipient())) {
-                        Message obj = (Message) ois.readObject();
-                        messages.add(obj);
-                        unsentMessages.put(message.getRecipient(), messages);
-                        //if satsen ska först kolla om personen finns i onlineList och ifall inte skicka det och lagra i klassen unsentMessages
-                        //Finns personen så skicka det till hen
-                    } else {
+                //Deletes user from online clients if object read is user
+                if (readObject instanceof Message) {
+                    message = (Message) readObject;
+                } else if (readObject instanceof User) {
 
+                    user = (User) readObject;
+                    onlineClients.removeUser(user);
 
+                    sendOnlineList();
 
-
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
                 }
+
+
+                sendMessage(message);
             }
         }
+    }
+
+    public static void main(String[] args) {
+        new ServerController(4999);
     }
 }
 
