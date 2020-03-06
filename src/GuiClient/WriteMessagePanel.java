@@ -60,6 +60,7 @@ public class WriteMessagePanel extends JPanel {
         return icon;
     }
 
+
     public void showPanelinFrame(){
         JFrame frame = new JFrame("Write your message");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
