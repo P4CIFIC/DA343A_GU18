@@ -60,6 +60,9 @@ public class MessageShowPanel extends JPanel {
 
 
     }
+    public void sendMessage(ImageIcon icon, String message){
+        panel.sendMessage(icon,message);
+    }
     public void newMessage(){
         WriteMessagePanel writeMessagePanel = new WriteMessagePanel("daniel",this); // fixa
         writeMessagePanel.showPanelinFrame();

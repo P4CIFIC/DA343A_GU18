@@ -27,7 +27,7 @@ public class WriteMessagePanel extends JPanel {
 
         //actionlisteners
 
-        buttonSend.addActionListener(e -> sendMessage());
+        buttonSend.addActionListener(e -> sendMessage(getImageIcon(),jTextArea.getText()));
         buttonAddPicture.addActionListener(e -> addPicture());
         buttonExit.addActionListener(e -> frame.dispose());
 
@@ -38,7 +38,8 @@ public class WriteMessagePanel extends JPanel {
         add(panelButtons,BorderLayout.SOUTH);
 
     }
-    public void sendMessage(){
+    public void sendMessage(ImageIcon icon, String Text){
+
 
     }
     public void addPicture(){

@@ -40,9 +40,7 @@ public class ClientGui extends JPanel {
    }
 
 
-   public void messageSent(String message){
-        //clientController.send(message);
-   }
+
 
    public void showPanelinFrame(){
        JFrame frame = new JFrame("Messanger");
@@ -64,6 +62,9 @@ public class ClientGui extends JPanel {
        refreshMessages(Messages);
        refreshContactList(contactList);
        refreshOnlineList(onlineList);
+   }
+   public void sendMessage(ImageIcon icon, String message){
+
    }
 
     public static void main(String[] args) throws IOException {
