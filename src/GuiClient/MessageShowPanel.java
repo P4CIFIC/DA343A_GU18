@@ -21,10 +21,11 @@ public class MessageShowPanel extends JPanel {
     private JButton buttonNewMessage = new JButton("New message");
     private JTextArea jTextAreaMessage = new JTextArea();
     private JScrollPane jScrollPane = new JScrollPane(jTextAreaMessage);
+    private MainPanel panel;
 
 
-
-    public MessageShowPanel(){
+    public MessageShowPanel(MainPanel panel){
+        this.panel=panel;
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(380,600));
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -45,6 +46,7 @@ public class MessageShowPanel extends JPanel {
         panelSoutSouth.add(buttondel);
         panelSoutSouth.add(buttonNewMessage);
         panelSouth.add(jScrollPane);
+
         panelNorthNorth.add(panelNorth, BorderLayout.NORTH);
         panelNorthNorth.add(panelCenter, BorderLayout.CENTER);
         panelNorthNorth.add(panelSouth, BorderLayout.SOUTH);
@@ -55,15 +57,23 @@ public class MessageShowPanel extends JPanel {
         add(panelNorthNorth, BorderLayout.CENTER);
         add(panelSoutSouth, BorderLayout.SOUTH);
 
+        //ACTION MF LISTENERS
+        buttonAdd.addActionListener(e -> addContact());
+        buttonNewMessage.addActionListener(e -> newMessage());
 
+
+    }
+    public void newMessage(){
+        WriteMessagePanel writeMessagePanel = new WriteMessagePanel("daniel",this); // fixa
+        writeMessagePanel.showPanelinFrame();
+
+    }
+
+    public void addContact(){
 
     }
     public void setPicturetoframes(ImageIcon icon){
         jLabelPicture.setIcon(icon);
-    }
-
-    public static void main(String[] args) {
-        JOptionPane.showMessageDialog(null,new MessageShowPanel());
     }
 
 }

@@ -10,12 +10,10 @@ import java.io.IOException;
 public class MainPanel extends JPanel {
     private ClientController clientController;
    private  ContactListPanel contactListPanel;
-   private TextPanel textPanel = new TextPanel(this);
    private MessageListPanel messageListPanel;
-   private MessageShowPanel messageShowPanel = new MessageShowPanel();
+   private MessageShowPanel messageShowPanel = new MessageShowPanel(this);
    public MainPanel(ClientController controller){
       // this.clientController = controller;
-
        setLayout(new BorderLayout());
        contactListPanel = new ContactListPanel();
        messageListPanel = new MessageListPanel();
@@ -29,23 +27,21 @@ public class MainPanel extends JPanel {
        showPanelinFrame();
        repaint();
    }
-   public void addContact(){
+   public void addContact(String Name, int index){
+       //todo använd  till det ni skall.
+
+
 
    }
    public void showPicture(ImageIcon icon){
        messageShowPanel.setPicturetoframes(icon);
    }
 
-   public String getTextForMessage(){
-       return textPanel.getTextForMessage();
-   }
+
    public void messageSent(String message){
         //clientController.send(message);
    }
-   public void appendText(String Messagetext){
-       textPanel.appendTextToTextArea(Messagetext);
 
-   }
    public void showPanelinFrame(){
        JFrame frame = new JFrame("Messanger");
        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
