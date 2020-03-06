@@ -14,6 +14,8 @@ public class Message implements Serializable {
     private Calendar timeDelivered;
     private Boolean containsImage;
 
+    public Message(){}
+
     public Message(String messageText, User sender, User recipient) {
         this.messageText = messageText;
         this.sender = sender;

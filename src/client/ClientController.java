@@ -1,5 +1,7 @@
 package client;
 
+import GuiClient.ClientGui;
+
 import javax.swing.*;
 import java.util.LinkedList;
 
@@ -7,7 +9,7 @@ public class ClientController {
     private Client client;
     private User user;
     private MessageRegister register = new MessageRegister();
-    private GUI gui;
+    private ClientGui gui;
 
 
 
